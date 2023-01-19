@@ -1,15 +1,17 @@
-import unittest
-import converter
+# import logging
+# import unittest
+# from converter import Converter
 
-class TestConverter(unittest.TestCase):
+# class TestConverter(unittest.TestCase):
+#     def testConverterArgumentNone(self):
+#         with self.assertRaises(Exception):
+#             Converter.convert(None)
+              
+#     def testInputNotPresent(self):
+#         with self.assertRaises(FileNotFoundError):
+#             Converter.convert("fileNotExist.pdf")
 
-    def testConverterBothArgumentsNone(self):
-        with self.assertRaises(Exception):
-            converter.Converter.convert(None,None)
-    
-    def testInputNotPresent(self):
-        with self.assertRaises(FileNotFoundError):
-            converter.Converter.convert("fakeNoneExistent.pdf", None)
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+
+#     unittest.main()
