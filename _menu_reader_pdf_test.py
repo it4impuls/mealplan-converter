@@ -1,8 +1,9 @@
-""" Benighted Module. """
+""" Module. """
 import os
 import logging
 import unittest
 from _menu_reader_pdf import MenuReaderPDF
+from _file_type_exception import FileTypeException
 
 
 class TestMenuReaderPDF(unittest.TestCase):
@@ -15,6 +16,11 @@ class TestMenuReaderPDF(unittest.TestCase):
     def test_input_not_exist(self):
         with self.assertRaises(FileNotFoundError):
             obj = MenuReaderPDF("FileNotExist.pdf")
+            obj.openreader()
+
+    def test_input_not_pdf(self):
+        with self.assertRaises(FileTypeException):
+            obj = MenuReaderPDF("FileNotPDF.txt")
             obj.openreader()
 
 
