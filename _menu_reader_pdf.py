@@ -26,9 +26,8 @@ class MenuReaderPDF:
         match self.pfadzurdatei:
             case None:
                 raise TypeError
-            case str() as x:
-                if not os.path.exists(x):
-                    raise FileNotFoundError
+            case str() as x if not os.path.exists(x):
+                raise FileNotFoundError
 
 
 if __name__ == "__main__":
