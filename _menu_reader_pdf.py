@@ -14,16 +14,21 @@ class MenuReaderPDF:
 
     def openreader(self):
         """ Funktion zum entgegennehmen eines Dateipfades. """
+        self.validate_input()
         try:
-            if os.path.exists(self.pfadzurdatei):  # eventuell in init
-                tables = camelot.read_pdf(self.pfadzurdatei)
-                logging.debug(tables[0].df)
-            else:
-                logging.error('Die Datei: %s existiert nicht!', self.pfadzurdatei)
-                raise FileNotFoundError
+            tables = camelot.read_pdf(self.pfadzurdatei)
+            logging.debug(tables[0].df)
         except Exception:
             logging.error('Fehler unbekannt!')
             raise Exception
+
+    def validate_input(self):
+        match self.pfadzurdatei:
+            case None:
+                raise TypeError
+            case str() as x:
+                if not os.path.exists(x):
+                    raise FileNotFoundError
 
 
 if __name__ == "__main__":
