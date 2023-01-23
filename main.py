@@ -1,4 +1,4 @@
-from converter import Converter
+from _converter import Converter
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 

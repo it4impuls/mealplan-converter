@@ -1,17 +1,14 @@
 """ Module. """
 import os
 import logging
-from tkinter import filedialog
+import unittest
 from _menu_reader_pdf import MenuReaderPDF
+from _file_type_exception import FileTypeException
 
 
-class Converter:
+class TestMenuConverter(unittest.TestCase):
 
-    def __init__(self):
-        self.pfadzurdatei = MenuReaderPDF(self.__open_file_input_dialog())
-
-    def __open_file_input_dialog(self):
-        return filedialog.askopenfilename()
+    # def test_input_is_none(self):
 
 
 if __name__ == "__main__":
@@ -21,4 +18,4 @@ if __name__ == "__main__":
         level=logging.DEBUG
     )
     logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))
-    convertor = Converter()
+    unittest.main()

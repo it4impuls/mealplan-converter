@@ -1,23 +1,34 @@
 """ Was macht die Datei. """
-import os
 import logging
-import camelot
+import os
+
+import camelot.io as camelot
+
 from _file_type_exception import FileTypeException
 
 
 # import xlsxwriter
 
 class MenuReaderPDF:
-    """ Klasse zum einlesen einer PDF-Datei. """
-
+    """
+    Klasse zum einlesen einer PDF-Datei.
+    Sie bekommt einen Pfad zu einer PDF-Datei und gibt einen table zurück
+    """
     def __init__(self, pfadzurdatei):
         self.pfadzurdatei = self.__validate_input(pfadzurdatei)
+        self.table = self.__openreader()
 
-    def openreader(self):
-        """ Funktion zum entgegennehmen eines Dateipfades. """
+    def get_table(self):
+        return self.table
+
+    def __openreader(self):
+        """
+        Funktion zum entgegennehmen eines Dateipfades.
+        Gibt einen Table zurück.
+        """
         try:
-            tables = camelot.read_pdf(self.pfadzurdatei)
-            logging.debug(tables[0].df)
+            tmp_table = camelot.read_pdf(self.pfadzurdatei)
+            return tmp_table[0]
         except Exception:
             logging.error('Fehler unbekannt!')
             raise Exception
@@ -32,6 +43,7 @@ class MenuReaderPDF:
                         raise FileTypeException
                     case x if not os.path.exists(x):
                         raise FileNotFoundError
+        return nichtvalidierterpfad
 
     def __check_file_type(self, dateipfad):
         dateiname = self.__get_filename(dateipfad)
@@ -55,3 +67,4 @@ if __name__ == "__main__":
     )
 
     logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))
+    obj = MenuReaderPDF("/home/itloft/Downloads/KW 40.pdf")
