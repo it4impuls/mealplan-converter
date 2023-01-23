@@ -21,6 +21,7 @@ class Converter:
         print(self.__table)
 
 
+
 if __name__ == "__main__":
     logger = logging.getLogger()
     logging.basicConfig(

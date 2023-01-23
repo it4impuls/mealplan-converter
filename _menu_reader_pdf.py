@@ -28,7 +28,7 @@ class MenuReaderPDF:
         """
         try:
             tmp_table = camelot.read_pdf(self.pfadzurdatei)
-            return tmp_table[0]
+            return tmp_table[0].df
         except Exception:
             logging.error('Fehler unbekannt!')
             raise Exception
