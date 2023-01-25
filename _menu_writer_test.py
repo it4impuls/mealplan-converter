@@ -2,15 +2,14 @@
 import os
 import logging
 import unittest
-from _converter import Converter
-from _exceptions import MenuReaderException
+from _exceptions import MenuWriterException
 
 
-class TestMenuConverter(unittest.TestCase):
+class TestMenuWriter(unittest.TestCase):
 
     def test_object_created(self):
-        with self.assertRaises(MenuReaderException):
-            obj = Converter("table_with_right_condition_and_not_all_fields_set.pdf")
+        with self.assertRaises(Exception):
+            pass
 
 
 if __name__ == "__main__":

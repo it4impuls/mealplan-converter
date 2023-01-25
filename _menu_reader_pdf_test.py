@@ -1,9 +1,9 @@
-""" Module. """
+"""Tests für den MenuReader"""
 import os
 import logging
 import unittest
 from _menu_reader_pdf import MenuReaderPDF
-from _file_type_exception import FileTypeException
+from _exceptions import TableException, TableConditionException, FileTypeException
 
 
 class TestMenuReaderPDF(unittest.TestCase):
@@ -11,17 +11,22 @@ class TestMenuReaderPDF(unittest.TestCase):
     def test_input_is_none(self):
         with self.assertRaises(TypeError):
             obj = MenuReaderPDF(None)
-            obj.openreader()
 
     def test_input_not_exist(self):
         with self.assertRaises(FileNotFoundError):
             obj = MenuReaderPDF("FileNotExist.pdf")
-            obj.openreader()
 
     def test_input_not_pdf(self):
         with self.assertRaises(FileTypeException):
             obj = MenuReaderPDF("FileNotPDF.txt")
-            obj.openreader()
+
+    def test_table_not_exist(self):
+        with self.assertRaises(TableException):
+            obj = MenuReaderPDF("emptypdf.pdf")
+
+    def test_table_condition(self):
+        with self.assertRaises(TableConditionException):
+            obj = MenuReaderPDF("tablenottherightcondition.pdf")
 
 
 if __name__ == "__main__":

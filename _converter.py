@@ -1,25 +1,21 @@
 """ Module. """
 import os
 import logging
-from tkinter import filedialog
 from _menu_reader_pdf import MenuReaderPDF
+from _menu_writer import MenuWriter
+from _exceptions import MenuWriterException
 
 
 class Converter:
 
+    def __init__(self, datei_pfad):
+        self.__table = MenuReaderPDF(datei_pfad).get_table()
 
-    def __init__(self):
-        self.__dateipfad = self.__open_file_input_dialog()
-        self.__menureader = MenuReaderPDF(self.__dateipfad)
-        self.__table = self.__menureader.get_table()
-        self.__read_table()
-
-    def __open_file_input_dialog(self):
-        return filedialog.askopenfilename()
-
-    def __read_table(self):
-        print(self.__table)
-
+    def convert(self):
+        try:
+            return MenuWriter(self.__table).create_xlsx()
+        except:
+            raise MenuWriterException
 
 
 if __name__ == "__main__":
@@ -28,5 +24,3 @@ if __name__ == "__main__":
         format='%(asctime)s %(levelname)s: %(message)s',
         level=logging.DEBUG
     )
-    obj = Converter()
-    # logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))

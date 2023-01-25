@@ -1,13 +1,12 @@
-""" Was macht die Datei. """
-import logging
+"""
+Dieser Teil des Converters soll einen Pfad zu einer PDF-Datei bekommen
+und diese dann einlesen und eine Table zurück geben.
+"""
 import os
-
+import logging
 import camelot.io as camelot
+from _exceptions import TableException, TableConditionException, FileTypeException
 
-from _file_type_exception import FileTypeException
-
-
-# import xlsxwriter
 
 class MenuReaderPDF:
     """
@@ -15,25 +14,37 @@ class MenuReaderPDF:
     Sie bekommt einen Pfad zu einer PDF-Datei und gibt einen table zurück
     """
     def __init__(self, pfadzurdatei):
-        self.pfadzurdatei = self.__validate_input(pfadzurdatei)
-        self.table = self.__openreader()
+        self.__pfadzurdatei = self.__validate_path(pfadzurdatei)
+        self.__table = self.__openreader()
 
     def get_table(self):
-        return self.table
+        return self.__table
 
     def __openreader(self):
         """
         Funktion zum entgegennehmen eines Dateipfades.
         Gibt einen Table zurück.
+        Anmerkung: wenn die Datei kein Table enthält gibt es ein UserWarning den man auch
+        abfangen könnte. Es gibt ein python Paket warnings welches diese Thema behandelt.
         """
         try:
-            tmp_table = camelot.read_pdf(self.pfadzurdatei)
-            return tmp_table[0].df
-        except Exception:
-            logging.error('Fehler unbekannt!')
-            raise Exception
+            tmp_table = camelot.read_pdf(self.__pfadzurdatei)
+            if tmp_table.n == 0:
+                raise TableException
+            else:
+                return self.__validate_table(tmp_table[0].df)
+        except (TableException, Exception) as error:
+            raise error
 
-    def __validate_input(self, nichtvalidierterpfad):
+    def __validate_table(self, zutestendetabelle):
+        if zutestendetabelle.shape[0] != 4:
+            raise TableConditionException
+        elif zutestendetabelle.shape[1] > 5 | zutestendetabelle.shape[1] < 1:
+            raise TableConditionException
+        else:
+            return zutestendetabelle
+
+    def __validate_path(self, nichtvalidierterpfad):
         match nichtvalidierterpfad:
             case None:
                 raise TypeError
@@ -67,4 +78,3 @@ if __name__ == "__main__":
     )
 
     logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))
-    obj = MenuReaderPDF("/home/itloft/Downloads/KW 40.pdf")
