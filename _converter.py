@@ -13,6 +13,7 @@ class Converter:
 
     def convert(self):
         try:
+
             return MenuWriter(self.__table).create_xlsx()
         except:
             raise MenuWriterException
@@ -24,3 +25,4 @@ if __name__ == "__main__":
         format='%(asctime)s %(levelname)s: %(message)s',
         level=logging.DEBUG
     )
+    Converter("test.pdf").convert()

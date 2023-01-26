@@ -5,7 +5,10 @@ und diese dann einlesen und eine Table zurück geben.
 import os
 import logging
 import camelot.io as camelot
-from _exceptions import TableException, TableConditionException, FileTypeException
+from camelot import plot
+from _allergenic import Allergenic
+from _exceptions import TableException, TableConditionException, FileTypeException, AllergenicException, \
+    TablePagesNullException
 
 
 class MenuReaderPDF:
@@ -13,12 +16,27 @@ class MenuReaderPDF:
     Klasse zum einlesen einer PDF-Datei.
     Sie bekommt einen Pfad zu einer PDF-Datei und gibt einen table zurück
     """
+
     def __init__(self, pfadzurdatei):
         self.__pfadzurdatei = self.__validate_path(pfadzurdatei)
         self.__table = self.__openreader()
+        self.__allergenics = Allergenic(self.__table[0][3]).get_allgernics()
 
     def get_table(self):
         return self.__table
+
+    def get_allergenics(self):
+        return self.__allergenics
+
+    def build_output(self):
+        for c in self.__table.columns:
+            if c != 0:
+                dataset = dict()
+                dataset.update({"datum": self.__table.iloc[0, c]})
+                dataset.update({"vollkost": self.__table.iloc[1, c]})
+                dataset.update({"vegetarisch": self.__table.iloc[2, c]})
+                logging.info(dataset)
+                del dataset
 
     def __openreader(self):
         """
@@ -30,19 +48,19 @@ class MenuReaderPDF:
         try:
             tmp_table = camelot.read_pdf(self.__pfadzurdatei)
             if tmp_table.n == 0:
-                raise TableException
+                raise Exception
             else:
                 return self.__validate_table(tmp_table[0].df)
         except (TableException, Exception) as error:
             raise error
 
     def __validate_table(self, zutestendetabelle):
-        if zutestendetabelle.shape[0] != 4:
-            raise TableConditionException
-        elif zutestendetabelle.shape[1] > 5 | zutestendetabelle.shape[1] < 1:
-            raise TableConditionException
-        else:
-            return zutestendetabelle
+        match zutestendetabelle.shape:
+            case x if x[0] < 3:
+                raise AllergenicException
+            case x if x[1] < 4 or x[1] > 5:
+                raise TableConditionException
+        return zutestendetabelle
 
     def __validate_path(self, nichtvalidierterpfad):
         match nichtvalidierterpfad:
@@ -73,8 +91,10 @@ class MenuReaderPDF:
 if __name__ == "__main__":
     logger = logging.getLogger()
     logging.basicConfig(
-        format='%(asctime)s %(levelname)s: %(message)s',
+        # format='%(asctime)s %(levelname)s: %(message)s',
+        format='%(message)s',
         level=logging.DEBUG
     )
 
     logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))
+    MenuReaderPDF("test.pdf").build_output()

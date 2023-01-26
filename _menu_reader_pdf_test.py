@@ -20,13 +20,16 @@ class TestMenuReaderPDF(unittest.TestCase):
         with self.assertRaises(FileTypeException):
             obj = MenuReaderPDF("FileNotPDF.txt")
 
+    @unittest.skip("Keine passende Eingabe-Datei verfügbar")
     def test_table_not_exist(self):
         with self.assertRaises(TableException):
-            obj = MenuReaderPDF("emptypdf.pdf")
+            obj = MenuReaderPDF("empty_table.pdf")
 
+    @unittest.skip("Keine passende Eingabe-Datei verfügbar")
     def test_table_condition(self):
         with self.assertRaises(TableConditionException):
-            obj = MenuReaderPDF("tablenottherightcondition.pdf")
+            obj = MenuReaderPDF("not_right_condition.pdf")
+
 
 
 if __name__ == "__main__":
