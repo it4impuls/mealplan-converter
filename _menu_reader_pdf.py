@@ -35,8 +35,55 @@ class MenuReaderPDF:
                 dataset.update({"datum": self.__table.iloc[0, c]})
                 dataset.update({"vollkost": self.__table.iloc[1, c]})
                 dataset.update({"vegetarisch": self.__table.iloc[2, c]})
-                logging.info(dataset)
-                del dataset
+                return self.__pre_build_output(dataset)
+
+    def __pre_build_output(self, pre_table):
+        output = dict()
+        tmp_dataset = dict()
+        for i in pre_table:
+            match i:
+                case "datum":
+                    tmp_dataset.update({"datum": self.__build_date_string(pre_table[i])})
+                case "vollkost":
+                    tmp_dataset.update({"vollkost": self.__build_meal_string(pre_table[i])})
+                case "vegetarisch":
+                    tmp_dataset.update({"vegetarisch": self.__build_meal_string(pre_table[i])})
+            if len(tmp_dataset) == 3:
+                output.update(tmp_dataset)
+                del tmp_dataset
+        return output
+
+    def __build_date_string(self, date_string):
+        ds_list = date_string.split(",")
+        return ds_list[1]
+
+    def __build_meal_string(self, meal_string):
+        meal_string = meal_string.replace('GV ', '').strip()
+        ms_list = meal_string.split("\n")
+        new_meal_string = ""
+        for i in ms_list:
+            tmp_new_allergenic_string = " | Allergene: "
+            """i ist der String in dem das Essen steht"""
+            i = i.strip()
+            l_tmp = i.split(" ")
+            """
+            l_tmp sind die Teile des Strings in dem das Essen steht
+            0 ist das Menü
+            -1 sind die Allergene
+            """
+            a_tmp = list(map(self.__find_and_replace_allergenics, l_tmp[-1].split(",")))
+            n_tmp = [i for i in a_tmp if i is not None]
+            for x in n_tmp:
+                tmp_new_allergenic_string += x + ", "
+            l_tmp[-1] = tmp_new_allergenic_string
+            for e in range(len(l_tmp)):
+                new_meal_string += l_tmp[e] + " "
+        return new_meal_string
+
+    def __find_and_replace_allergenics(self, x):
+        for i in self.__allergenics:
+            if x == i:
+                return self.__allergenics[i]
 
     def __openreader(self):
         """
@@ -97,4 +144,5 @@ if __name__ == "__main__":
     )
 
     logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))
-    MenuReaderPDF("test.pdf").build_output()
+    print(MenuReaderPDF("test.pdf").build_output())
+
