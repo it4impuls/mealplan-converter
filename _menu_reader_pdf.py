@@ -5,10 +5,8 @@ und diese dann einlesen und eine Table zurück geben.
 import os
 import logging
 import camelot.io as camelot
-from camelot import plot
 from _allergenic import Allergenic
-from _exceptions import TableException, TableConditionException, FileTypeException, AllergenicException, \
-    TablePagesNullException
+from _exceptions import TableException, TableConditionException, FileTypeException, AllergenicException, TablePagesNullException
 
 
 class MenuReaderPDF:
@@ -29,13 +27,15 @@ class MenuReaderPDF:
         return self.__allergenics
 
     def build_output(self):
+        output = []
         for c in self.__table.columns:
             if c != 0:
                 dataset = dict()
                 dataset.update({"datum": self.__table.iloc[0, c]})
                 dataset.update({"vollkost": self.__table.iloc[1, c]})
                 dataset.update({"vegetarisch": self.__table.iloc[2, c]})
-                return self.__pre_build_output(dataset)
+                output.append(self.__pre_build_output(dataset))
+        return output
 
     def __pre_build_output(self, pre_table):
         output = dict()
@@ -63,14 +63,8 @@ class MenuReaderPDF:
         new_meal_string = ""
         for i in ms_list:
             tmp_new_allergenic_string = " | Allergene: "
-            """i ist der String in dem das Essen steht"""
             i = i.strip()
             l_tmp = i.split(" ")
-            """
-            l_tmp sind die Teile des Strings in dem das Essen steht
-            0 ist das Menü
-            -1 sind die Allergene
-            """
             a_tmp = list(map(self.__find_and_replace_allergenics, l_tmp[-1].split(",")))
             n_tmp = [i for i in a_tmp if i is not None]
             for x in n_tmp:
@@ -144,5 +138,8 @@ if __name__ == "__main__":
     )
 
     logging.info("Datei: %s wurde ausgeführt", os.path.basename(__file__))
-    print(MenuReaderPDF("test.pdf").build_output())
+    data = MenuReaderPDF("test.pdf").build_output()
+    for e in data:
+       logging.info(e)
+
 
