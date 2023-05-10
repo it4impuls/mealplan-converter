@@ -13,7 +13,6 @@ class Converter:
 
     def convert(self):
         try:
-
             return MenuWriter(self.__table).create_xlsx()
         except:
             raise MenuWriterException
