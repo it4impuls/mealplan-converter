@@ -21,6 +21,7 @@ class MenuReaderPDF:
         self.__allergenics = Allergenic(self.__table[0][3]).get_allgernics()
 
     def get_table(self):
+        print(self.__table)
         return self.__table
 
     def get_allergenics(self):
@@ -56,7 +57,7 @@ class MenuReaderPDF:
         match zutestendetabelle.shape:
             case x if x[0] < 3:
                 raise AllergenicException
-            case x if x[1] < 4 or x[1] > 5:
+            case x if x[1] < 4 or x[1] > 6:
                 raise TableConditionException
         return zutestendetabelle
 
