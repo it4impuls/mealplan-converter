@@ -21,7 +21,6 @@ class MenuReaderPDF:
         self.__allergenics = Allergenic(self.__table[0][3]).get_allgernics()
 
     def get_table(self):
-        print(self.__table)
         return self.__table
 
     def get_allergenics(self):

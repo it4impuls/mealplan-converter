@@ -1,7 +1,7 @@
 """ Module. """
 import os
 import logging
-from _menu_reader_pdf import MenuReaderPDF
+
 from _menu_writer import MenuWriter
 from _exceptions import MenuWriterException
 
