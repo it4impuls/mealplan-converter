@@ -26,7 +26,7 @@ class MenuWriter:
             for r in range(0, len(self.__table)-1):
                 match r:
                     case 0 if re.search(r"\b(?:0?[1-9]|[1-2][0-9]|3[0-1])\.(?:0?[1-9]|1[0-2])\.\d{4}\b", self.__table[c][r]):
-                        worksheet.write(self.row, self.cols, self.__table[c][r].split(",")[1].strip())
+                        worksheet.write(self.row, self.cols, self.change_date_format(self.__table[c][r].split(",")[1].strip()))
                         self.cols += 1
                     case 1:
                         # GV entfernen
@@ -40,6 +40,10 @@ class MenuWriter:
                         self.row += 1
                         self.cols = 0
         workbook.close()
+
+    def change_date_format(self, date_string):
+        tmp_date = date_string.split(".")
+        return tmp_date[2] + "-" + tmp_date[1] + "-" + tmp_date[0]
         
     
 
