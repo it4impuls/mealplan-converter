@@ -13,7 +13,8 @@ class MenuWriter:
         self.__name = name + ".xlsx"
     
     def remove_gv_and_nl(self ,tmp_string: str)->str:
-        return re.sub(r'(GV)*(\n)*(\s+)', ' ', tmp_string).strip()
+        nts = re.sub(r'(GV)', '',tmp_string)
+        return re.sub(r'(\n)*(\s{2})', ' ', nts).strip()
 
     def create_xlsx(self):
         workbook = xlsxwriter.Workbook(self.__name)
