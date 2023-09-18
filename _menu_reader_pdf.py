@@ -5,7 +5,6 @@ und diese dann einlesen und eine Table zurück geben.
 import os
 import logging
 import camelot.io as camelot
-from _allergenic import Allergenic
 from _exceptions import TableException, TableConditionException, FileTypeException, AllergenicException, TablePagesNullException
 
 
@@ -18,13 +17,9 @@ class MenuReaderPDF:
     def __init__(self, pfadzurdatei):
         self.__pfadzurdatei = self.__validate_path(pfadzurdatei)
         self.__table = self.__openreader()
-        self.__allergenics = Allergenic(self.__table[0][3]).get_allgernics()
 
     def get_table(self):
         return self.__table
-
-    def get_allergenics(self):
-        return self.__allergenics
 
     def build_output(self):
         output = []

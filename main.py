@@ -2,7 +2,6 @@ import sys
 import os
 import re
 import pandas as pd
-from _converter import Converter
 from _menu_writer import MenuWriter
 from _menu_reader_pdf import MenuReaderPDF
 
