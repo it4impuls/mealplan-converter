@@ -24,7 +24,7 @@ Verwendung:
 3.) Ersetzten Sie die Dateien die mit KW anfangen mit den aktuellen (KW steht für Kalender Woche)
     achten Sie darauf das die Dateien folgendes Muster im Namen haben -> KW 30.pdf.
 
-    In der Regel müssten es 4 - 5 Dateinen sein die wir von der Hauswirtschaft bekommen.
+    In der Regel müssten es 4 - 5 Dateien sein die wir von der Hauswirtschaft bekommen.
     Nachdem die aktuell KW Dateien in das Project Verzeichnis kopiert wurden und die Beispiel Dateinen gelöscht wurden geht es mit Schritt 4 weiter.
 
 
