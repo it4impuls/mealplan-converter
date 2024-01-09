@@ -37,8 +37,7 @@ Verwendung:
     Und die Datum Spalte muss als Datum mit dem Format yyyy-mm-dd erkannt und bestätigt werden.
 
 6.) Öffnen Sie jetzt einen Browser (Firefox oder Chrome) und rufen Sie http://mealplan.impulsreha.local:8000/hwi
-    Username: admin_hwi
-    Passwort: ***REMOVED***
+    Für Loginddaten fragen Sie die Fachanleitung
 
 7.) CLicken Sie rechts oben auf Upload und wählen Sie Menu.
 
