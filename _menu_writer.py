@@ -7,6 +7,7 @@ import re
 class MenuWriter:
     row = 1 # Zeile
     cols = 0 # Spalte
+    disallowed_strings = [r"\n", r"\"", r"'", r"/", r"\\\\"]
 
     def __init__(self, table, name):
         self.__table = table
@@ -14,7 +15,10 @@ class MenuWriter:
     
     def remove_gv_and_nl(self ,tmp_string: str)->str:
         nts = re.sub(r'(GV)', '',tmp_string)
-        return re.sub(r'(\n)*(\s{2})', ' ', nts).strip()
+        
+        for s in self.disallowed_strings:
+            nts = re.sub(r'('+s+')', ' ', nts).strip()
+        return re.sub(r'(\s{2})', ' ', nts).strip()
 
     def create_xlsx(self):
         workbook = xlsxwriter.Workbook(self.__name)
