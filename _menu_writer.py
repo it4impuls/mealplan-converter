@@ -1,3 +1,5 @@
+#!/bin/python3
+
 """ Module. """
 import os
 import logging
@@ -12,9 +14,16 @@ class MenuWriter:
     def __init__(self, table, name):
         self.__table = table
         self.__name = name + ".xlsx"
+
+    def remove_desert(self, tmp_string:str):
+        """select and remove line starting with \nGV that does not have a following GV( .|\n(?!GV)), so that its the last entry """
+        # print(re.search(r"\nGV(?:.|\n(?!GV))+$", tmp_string))
+        return re.sub(r"\nGV(?:.|\n(?!GV))+$", "", tmp_string)
     
     def remove_gv_and_nl(self ,tmp_string: str)->str:
-        nts = re.sub(r'(GV)', '',tmp_string)
+        nts = self.remove_desert(tmp_string)
+
+        nts = re.sub(r'(GV)', '',nts)
         
         for s in self.disallowed_strings:
             nts = re.sub(r'('+s+')', ' ', nts).strip()
