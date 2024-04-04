@@ -33,9 +33,6 @@ Verwendung:
 5.) Nach ein Paar Sekunden ist jetzt in dem Verzeichnis eine Datei new_merged_menu.xlsx .
     Das ist die Datei die in Mealplan hochgeladen werden muss.
 
-6.) Diese Datei muss unbedingt vor Upload noch etwas bearbeitet werden. Es dürfen keine Anführungszeichen " oder Back \ oder Frontslashes / in den Feldern sein.
-    Und die Datum Spalte muss als Datum mit dem Format yyyy-mm-dd erkannt und bestätigt werden.
-
 6.) Öffnen Sie jetzt einen Browser (Firefox oder Chrome) und rufen Sie das [Adminpanel](http://mealplan.impulsreha.local:8000/hwi) auf </br>
     Für die Loginddaten fragen Sie die Fachanleitung
 
