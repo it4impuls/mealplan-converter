@@ -1,16 +1,22 @@
 # meaplan-converter
 
-Installation unter Ubuntu:
+Diese App Liest die Monatlichen Menüs von der HWS und konvertiert diese zu excel, damit diese hochgeladen werden können.
 
-1.) `git clone https://github.com/it4impuls/meaplan-converter`
+## Voraussetzungen
+* [Python](https://www.python.org/downloads/)
+* [git](https://github.com/git-guides/install-git)
+* (Windows) [Ghostscript](https://ghostscript.com/releases/gsdnld.html)
 
-2.) `cd meaplan-converter`
+## Installation und Verwendung
 
-3.) `pip install virtualenv` oder ggf. vorher `sudo apt install python3.10-venv`
+
+
+### Linux
+1.) `git clone https://github.com/it4impuls/mealplan-converter`
+
+2.) `cd mealplan-converter`
 
 4.) `python -m venv .venv`
-
-5.) `source .venv/bin/activate`
 
 6.) `pip install -r requirements.txt`
 
@@ -32,6 +38,33 @@ Verwendung:
 
 5.) Nach ein Paar Sekunden ist jetzt in dem Verzeichnis eine Datei new_merged_menu.xlsx .
     Das ist die Datei die in Mealplan hochgeladen werden muss.
+
+### Windows
+1.) `git clone https://github.com/it4impuls/meaplan-converter`
+
+2.) `cd meaplan-converter`
+
+4.) `python -m venv .venv`
+* falls venv noch nicht vorhanden, installiere viretualenv `.venv\Scripts\pip install virtualenv`
+
+5.) `.venv\Scripts\pip install -r requirements.txt`
+
+
+## Verwendung:
+
+1.) Ersetzten Sie die PDF-Dateien die mit KW anfangen mit den aktuellen (KW steht für Kalender Woche)
+    achten Sie darauf das die Dateien folgendes Muster im Namen haben -> KW 30.pdf.
+
+    In der Regel müssten es 4 - 5 Dateien sein die wir von der Hauswirtschaft bekommen.
+    Nachdem die aktuell KW Dateien in das Project Verzeichnis kopiert wurden und die Beispiel Dateinen gelöscht wurden geht es mit Schritt 4 weiter.
+
+
+2.)  Linux: `python main.py`  Windows: `.venv\Scripts\python main.py`
+
+3.) Nach ein Paar Sekunden ist jetzt in dem Verzeichnis eine Datei new_merged_menu.xlsx .
+    Das ist die Datei die in Mealplan hochgeladen werden muss.
+
+## Menü Hochladen
 
 6.) Öffnen Sie jetzt einen Browser (Firefox oder Chrome) und rufen Sie das [Adminpanel](http://mealplan.impulsreha.local:8000/hwi) auf </br>
     Für die Loginddaten fragen Sie die Fachanleitung

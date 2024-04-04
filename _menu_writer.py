@@ -9,26 +9,22 @@ import re
 class MenuWriter:
     row = 1 # Zeile
     cols = 0 # Spalte
-    disallowed_strings = [r"\n", r"\"", r"'", r"/", r"\\\\"]
+    disallowed_strings = [r"-\n", r"\n(?!GV )", r"GV ", r"'"]
 
     def __init__(self, table, name):
         self.__table = table
         self.__name = name + ".xlsx"
 
     def remove_desert(self, tmp_string:str):
-        """select and remove line starting with \nGV that does not have a following GV( .|\n(?!GV)), so that its the last entry """
-        # print(re.search(r"\nGV(?:.|\n(?!GV))+$", tmp_string))
+        """select and remove line starting with \nGV that does not have a following GV anywhere ( .|\n(?!GV)),
+          so that its the last entry """
         return re.sub(r"\nGV(?:.|\n(?!GV))+$", "", tmp_string)
     
     def remove_gv_and_nl(self ,tmp_string: str)->str:
         nts = self.remove_desert(tmp_string)
-
-        nts = re.sub(r'(GV)', '',nts)
-        
         for s in self.disallowed_strings:
-            nts = re.sub(r'('+s+')', ' ', nts).strip()
-        return re.sub(r'(\s{2})', ' ', nts).strip()
-
+            nts = re.sub(rf'{s}', '', nts).strip()
+        return nts
     def create_xlsx(self):
         workbook = xlsxwriter.Workbook(self.__name)
         worksheet = workbook.add_worksheet()
