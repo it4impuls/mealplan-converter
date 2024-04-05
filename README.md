@@ -3,15 +3,14 @@
 Diese App Liest die Monatlichen Menüs von der HWS und konvertiert diese zu excel, damit diese hochgeladen werden können.
 
 ## Voraussetzungen
-* [Python](https://www.python.org/downloads/)
+* [Python](https://www.python.org/downloads/) (Stelle sicher der hakenbei "Add Python to environment variable" ist gesetzt)
 * [git](https://github.com/git-guides/install-git)
 * (Windows) [Ghostscript](https://ghostscript.com/releases/gsdnld.html)
 
 ## Installation und Verwendung
 
 
-
-### Linux
+### Linux installation
 1.) `git clone https://github.com/it4impuls/mealplan-converter`
 
 2.) `cd mealplan-converter`
@@ -21,25 +20,7 @@ Diese App Liest die Monatlichen Menüs von der HWS und konvertiert diese zu exce
 6.) `pip install -r requirements.txt`
 
 
-Verwendung:
-
-1.) `cd meaplan-converter`
-
-2.) `source .venv/bin/activate`
-
-3.) Ersetzten Sie die Dateien die mit KW anfangen mit den aktuellen (KW steht für Kalender Woche)
-    achten Sie darauf das die Dateien folgendes Muster im Namen haben -> KW 30.pdf.
-
-    In der Regel müssten es 4 - 5 Dateien sein die wir von der Hauswirtschaft bekommen.
-    Nachdem die aktuell KW Dateien in das Project Verzeichnis kopiert wurden und die Beispiel Dateinen gelöscht wurden geht es mit Schritt 4 weiter.
-
-
-4.) `python main.py` 
-
-5.) Nach ein Paar Sekunden ist jetzt in dem Verzeichnis eine Datei new_merged_menu.xlsx .
-    Das ist die Datei die in Mealplan hochgeladen werden muss.
-
-### Windows
+### Windows installation
 1.) `git clone https://github.com/it4impuls/meaplan-converter`
 
 2.) `cd meaplan-converter`
@@ -55,11 +36,11 @@ Verwendung:
 1.) Ersetzten Sie die PDF-Dateien die mit KW anfangen mit den aktuellen (KW steht für Kalender Woche)
     achten Sie darauf das die Dateien folgendes Muster im Namen haben -> KW 30.pdf.
 
-    In der Regel müssten es 4 - 5 Dateien sein die wir von der Hauswirtschaft bekommen.
-    Nachdem die aktuell KW Dateien in das Project Verzeichnis kopiert wurden und die Beispiel Dateinen gelöscht wurden geht es mit Schritt 4 weiter.
+In der Regel müssten es 4 - 5 Dateien sein die wir von der Hauswirtschaft bekommen.
+Nachdem die aktuell KW Dateien in das Project Verzeichnis kopiert wurden und die Beispiel Dateinen gelöscht wurden geht es mit Schritt 4 weiter.
 
 
-2.)  Linux: `python main.py`  Windows: `.venv\Scripts\python main.py`
+2.)  Linux: `.venv/Scripts/python main.py`  Windows: `.venv\Scripts\python main.py`
 
 3.) Nach ein Paar Sekunden ist jetzt in dem Verzeichnis eine Datei new_merged_menu.xlsx .
     Das ist die Datei die in Mealplan hochgeladen werden muss.
@@ -75,9 +56,7 @@ Verwendung:
 
 9.) Clicken Sie auf submit
 
-10.)    Der Vorgang und die Benutzung ist noch lange nicht perfekt. 
-        Falls mealplan nicht funktioniert müssen in der Datenbank die hochgeladenen Einträge per Hand gelöscht werden 
-        und die new_merged_menu.xlsx hat entweder ein Fehler im Datum oder irgendwo ein Sonderzeichen. () Rundeklammer funktionieren.
+10.) geben Sie den Monat ein und stellen Sie sicher, dass die Menüs an den gegebenen wochentagen verfügbar sind.
 
 
 
