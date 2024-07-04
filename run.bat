@@ -1,27 +1,5 @@
 @echo off
 SET SCRIPT_DIR=%~dp0
-goto begin
-goto :EOF
-
-:i_python
-  start "" https://apps.microsoft.com/detail/9pjpw5ldxlz5
-
-:i_git
-  start "" https://gitforwindows.org/
-  goto :EOF
-
-:download
-  echo "downloading" "converter..."
-  git clone --no-checkout https://github.com/it4impuls/mealplan-converter.git tmp/
-  move tmp\.git .git
-  git reset --hard HEAD
-  DEL /S "tmp"
-
-:loop
-    IF NOT exist "%SCRIPT_DIR%*.pdf" (
-        set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
-        )
-        goto loop
 
 :begin
 
@@ -46,3 +24,27 @@ goto :EOF
 
   goto loop
   python3 "main.py"
+
+
+
+
+
+:i_python
+  start "" https://apps.microsoft.com/detail/9pjpw5ldxlz5
+
+:i_git
+  start "" https://gitforwindows.org/
+  goto :EOF
+
+:download
+  echo "downloading" "converter..."
+  git clone --no-checkout https://github.com/it4impuls/mealplan-converter.git tmp/
+  move tmp\.git .git
+  git reset --hard HEAD
+  DEL /S "tmp"
+
+:loop
+    IF NOT exist "%SCRIPT_DIR%*.pdf" (
+        set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
+        )
+        goto loop
