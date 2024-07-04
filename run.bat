@@ -2,10 +2,12 @@
 SET SCRIPT_DIR=%~dp0
 
 :i_python
-  WinAppDeployCmd install python
+  start "" https://apps.microsoft.com/detail/9pjpw5ldxlz5
+  goto :EOF
 
 :i_git
-  open "https://gitforwindows.org/"
+  start "" https://gitforwindows.org/
+  goto :EOF
 
 :download
   echo "downloading" "converter..."
@@ -19,7 +21,7 @@ SET SCRIPT_DIR=%~dp0
         set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
         )
         goto loop
-  
+
 
 python --version 2>NUL
 if not errorlevel 0 goto i_python
