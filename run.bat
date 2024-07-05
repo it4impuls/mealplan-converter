@@ -20,20 +20,21 @@ goto :EOF
   echo downloading converter...
   git clone --no-checkout https://github.com/it4impuls/mealplan-converter.git %TMP_DIR%
   dir tmp /a
-  xcopy /s /e %SCRIPT_DIR%tmp\.git\* .git\
-  DEL /q /S "tmp"
+  xcopy /s /e %SCRIPT_DIR%tmp\.git\* .git\ >nul
+  DEL /q /S "tmp" >nul
   git reset --hard HEAD
   
 
 :venv
   echo installing virtual environment...
   python3 -m venv %SCRIPT_DIR%.venv
-  echo done!n
+  echo done!
 
 :find_pdf
-    IF NOT exist "%SCRIPT_DIR%*.pdf" \
+    IF NOT exist "%SCRIPT_DIR%*.pdf"(
       set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
-      goto find_pdf
+      @REM goto find_pdf
+	)
 
 :begin
 
@@ -42,20 +43,13 @@ goto :EOF
   git --version 2>NUL & IF ERRORLEVEL 1 goto i_git
 
   if not exist .git\ call :download
-  goto:EOF
   if not exist .venv\ call :venv
 
-  source "%SCRIPT_DIR%.venv\bin\activate"
+  %SCRIPT_DIR%.venv\Scripts\activate.bat
+  
   echo updating dependencies...
   pip3 "install" "-r" "requirements.txt" 
   echo done!
 
   call :find_pdf
   python3 "main.py"
-
-
-
-
-
-:end
-  
