@@ -43,7 +43,8 @@ goto :EOF
 
   git --version 2>NUL & IF ERRORLEVEL 1 goto i_git
 
-  git pull || call :download
+  git pull & IF ERRORLEVEL 128 call :download
+
   %SCRIPT_DIR%.venv\Scripts\activate.bat || call :venv
   
   echo updating dependencies...
