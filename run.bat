@@ -59,7 +59,7 @@ goto :EOF
 
   echo updating dependencies...
   pip "install" "-r" "requirements.txt" >nul
-  echo done!
+  echo pdf erfolgreich in excel umgewandelt. bereit zum hochladen
 
   call :find_pdf
   
