@@ -28,6 +28,7 @@ goto :EOF
 :venv
   echo installing virtual environment...
   python3 -m venv %SCRIPT_DIR%.venv
+  %SCRIPT_DIR%.venv\Scripts\activate.bat
   echo done!
 
 :find_pdf
@@ -42,10 +43,8 @@ goto :EOF
 
   git --version 2>NUL & IF ERRORLEVEL 1 goto i_git
 
-  if not exist .git\ call :download
-  if not exist .venv\ call :venv
-
-  %SCRIPT_DIR%.venv\Scripts\activate.bat
+  git pull || call :download
+  %SCRIPT_DIR%.venv\Scripts\activate.bat || call :venv
   
   echo updating dependencies...
   pip3 "install" "-r" "requirements.txt" 
