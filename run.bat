@@ -1,8 +1,21 @@
 @echo off
 SET SCRIPT_DIR=%~dp0
 SET TMP_DIR=tmp\
+SET VENV_PATH=.venv\Scripts\activate
 goto begin
 goto :EOF
+
+:find_pdf
+  echo finding pdf's
+    IF exist *.pdf (
+      echo running Program...
+      python "main.py" 
+      echo done
+      ) else (
+      echo "no pdf found"
+      set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
+      goto:EOF )
+  goto:EOF
 
 :i_python
   echo python not found, please install python 
@@ -31,25 +44,22 @@ goto :EOF
   %SCRIPT_DIR%.venv\Scripts\activate.bat
   echo done!
 
-:find_pdf
-    IF NOT exist "%SCRIPT_DIR%*.pdf"(
-      set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
-      @REM goto find_pdf
-	)
 
 :begin
-
+  @REM %SCRIPT_DIR%.venv\Scripts\activate.bat
   python --version 2>NUL & IF ERRORLEVEL 1 goto i_python
 
   git --version 2>NUL & IF ERRORLEVEL 1 goto i_git
 
+  gswin32c.exe -v  >nul 2>&1|| gswin64c.exe -v  >nul 2>&1 || start "" https://ghostscript.com/releases/gsdnld.html
+
   git pull & IF ERRORLEVEL 128 call :download
 
-  %SCRIPT_DIR%.venv\Scripts\activate.bat || call :venv
-  
+  call %VENV_PATH% || call :venv
+
   echo updating dependencies...
-  pip3 "install" "-r" "requirements.txt" 
+  pip "install" "-r" "requirements.txt" >nul
   echo done!
 
   call :find_pdf
-  python3 "main.py"
+  
