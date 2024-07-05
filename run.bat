@@ -14,7 +14,7 @@ goto :EOF
       ) else (
       echo "no pdf found"
       set /P var="keine PDF's gefunden. Bitte fügen Sie die PDF dateien in diesen Ordner ein und drücke dannach enter."
-      goto:EOF )
+      goto :find_pdf )
   goto:EOF
 
 :i_python
@@ -51,7 +51,7 @@ goto :EOF
 
   git --version 2>NUL & IF ERRORLEVEL 1 goto i_git
 
-  gswin32c.exe -v  >nul 2>&1|| gswin64c.exe -v  >nul 2>&1 || start "" https://ghostscript.com/releases/gsdnld.html
+  gswin32c.exe -v  >nul 2>&1|| gswin64c.exe -v  >nul 2>&1 || start "" "https://ghostscript.com/releases/gsdnld.html"
 
   git pull & IF ERRORLEVEL 128 call :download
 
